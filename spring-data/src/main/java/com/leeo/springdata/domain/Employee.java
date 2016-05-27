@@ -12,9 +12,10 @@ public class Employee {
 
     @GeneratedValue
     @Column(name = "id",nullable = false)
+    @Id
     private Integer id;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "email")
@@ -24,15 +25,17 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     private Date birth;
 
-    @Column(name = "createTime",nullable = false)
+    @Column(name = "createTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createTime;
 
-    @JoinColumn(name = "department_id")
     @ManyToOne
+    @JoinColumn(name = "department_id")
     private Department department;
 
-    @Id
+    public Employee() {
+    }
+
     public Integer getId() {
         return id;
     }

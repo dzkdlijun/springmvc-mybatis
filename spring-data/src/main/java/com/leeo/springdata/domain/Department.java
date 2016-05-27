@@ -11,11 +11,17 @@ public class Department {
 
     @GeneratedValue
     @Column(name = "id",nullable = false)
+    @Id
     private Integer id;
     @Column(name = "departmentName")
     private String departmentName;
 
-    @Id
+//    @OneToMany(mappedBy = "department", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+//    private List<Employee> employees = new ArrayList<Employee>();
+
+    public Department() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -23,6 +29,14 @@ public class Department {
     public void setId(Integer id) {
         this.id = id;
     }
+
+//    public List<Employee> getEmployees() {
+//        return employees;
+//    }
+//
+//    public void setEmployees(List<Employee> employees) {
+//        this.employees = employees;
+//    }
 
     public String getDepartmentName() {
         return departmentName;
