@@ -29,4 +29,10 @@ public class DepartController {
     public Department add(@RequestBody Department department){
         return departmentService.add(department);
     }
+
+    @RequestMapping(value = "delete",method = RequestMethod.GET)
+    @ResponseBody
+    public void delete(@RequestParam Long id){
+        departmentService.delete(id);
+    }
 }
