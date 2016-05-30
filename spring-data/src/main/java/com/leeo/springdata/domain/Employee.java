@@ -8,12 +8,7 @@ import java.util.Date;
  */
 @Table(name = "employee")
 @Entity
-public class Employee {
-
-    @GeneratedValue
-    @Column(name = "id",nullable = false)
-    @Id
-    private Integer id;
+public class Employee extends BaseDomain{
 
     @Column(name = "name")
     private String name;
@@ -25,8 +20,8 @@ public class Employee {
     @Temporal(TemporalType.DATE)
     private Date birth;
 
-    @Column(name = "createTime")
     @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "createTime",nullable = false,columnDefinition = "timestamp")
     private Date createTime;
 
     @ManyToOne
@@ -34,14 +29,6 @@ public class Employee {
     private Department department;
 
     public Employee() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

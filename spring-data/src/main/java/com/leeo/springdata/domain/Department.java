@@ -7,27 +7,18 @@ import javax.persistence.*;
  */
 @Table(name = "department")
 @Entity
-public class Department {
+public class Department extends BaseDomain{
 
-    @GeneratedValue
-    @Column(name = "id",nullable = false)
-    @Id
-    private Integer id;
     @Column(name = "departmentName")
     private String departmentName;
+
+    @Version
+    private Integer version;
 
 //    @OneToMany(mappedBy = "department", cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 //    private List<Employee> employees = new ArrayList<Employee>();
 
     public Department() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
 //    public List<Employee> getEmployees() {
@@ -44,5 +35,13 @@ public class Department {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 }
