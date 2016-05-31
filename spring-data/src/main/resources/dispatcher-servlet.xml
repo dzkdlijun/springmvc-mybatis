@@ -33,6 +33,8 @@
               </mvc:message-converters>
        </mvc:annotation-driven>
 
+       <mvc:resources mapping="/static/**" location="/static/"/>
+
        <!-- 无论使用哪种防止配置注解，都需要加载自己的handler，即controller，有两种方式，1单个配置，2直接扫描包 -->
        <!-- 方式1，单个配置 -->
        <!--<bean class="com.leeo.mybatis.controller.HomeController"/>-->
