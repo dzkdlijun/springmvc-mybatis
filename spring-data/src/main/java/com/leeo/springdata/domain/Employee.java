@@ -70,4 +70,9 @@ public class Employee extends BaseDomain{
     public void setDepartment(Department department) {
         this.department = department;
     }
+
+    public String toString(){
+        return this.getId() + ":" + this.getName();
+    }
+
 }
