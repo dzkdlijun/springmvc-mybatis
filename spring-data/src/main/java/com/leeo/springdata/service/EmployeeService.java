@@ -1,5 +1,6 @@
 package com.leeo.springdata.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.leeo.springdata.dao.EmployeeRepository;
 import com.leeo.springdata.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,7 +77,7 @@ public class EmployeeService  {
 
     @Transactional
     public void updateEmployeeNameById(String name,Long id){
-        employeeRepository.updateEmployeeNameById(name,id);
+        employeeRepository.updateEmployeeNameById(name, id);
     }
 
     @Transactional
@@ -94,7 +96,7 @@ public class EmployeeService  {
      * Specification:封装了Jpa Criteria 查询的查询条件
      * Pageable:封装了请求分页的信息，如pageNo,pageSize,Sort
      */
-    public Page<Employee> findEmployeeBySpecification(int pageNo,int pageSize){
+    public Page<Employee> findEmployeeBySpecification(int pageNo,int pageSize, final Long id){
         Sort.Order order1 = new Sort.Order(Sort.Direction.ASC,"id");
         Sort.Order order2 = new Sort.Order(Sort.Direction.DESC,"name");
         Sort sort = new Sort(order1,order2);
@@ -111,10 +113,70 @@ public class EmployeeService  {
              */
             public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 Path path = root.get("id");
-                Predicate predicate = cb.gt(path,5);
+                Predicate predicate = cb.gt(path,id);
                 return predicate;
             }
         };
-        return employeeRepository.findAll(specification,pageRequest);
+//        return employeeRepository.findAll(specification, pageRequest);
+//        return employeeRepository.findAll(buildSpecificationDynamically(id), pageRequest);
+//        return employeeRepository.findAll(buildSpecificationByCriteriaQuery(id), pageRequest);
+        return employeeRepository.findAll(buildSpecificationWithUnion("%lijun%", "service", id), pageRequest);
     }
+
+    /**
+     * 动态拼接Specification查询语句
+     */
+    private Specification<Employee> buildSpecificationDynamically(final Long minId){
+        return new Specification<Employee>() {
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> list = new ArrayList<Predicate>();
+                list.add(cb.like(root.get("name").as(String.class),"%lijun%"));
+                list.add(cb.gt(root.get("id").as(Long.class), minId));
+                Predicate[] p = new Predicate[list.size()];
+                return cb.and(list.toArray(p));
+            }
+        };
+    }
+
+    /**
+     * 使用CriteriaQuery组装Specification查询语句,能在动态拼接的基础上增加如排序和分组等其他功能
+     */
+    private Specification<Employee> buildSpecificationByCriteriaQuery(final Long minId){
+        return new Specification<Employee>() {
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                Predicate predicate1 = cb.like(root.get("name").as(String.class),"%lijun%");
+                Predicate predicate2 = cb.gt(root.get("id").as(Long.class), minId);
+                Predicate predicate3 = cb.equal(root.get("id").as(Long.class), 2l);
+                //把predicate应用到CriteriaQuery中，因为还可以给CriteriaQuery添加其他功能，比如排序、分组啥的
+                query.where(cb.and(predicate1, cb.or(predicate2, predicate3)));
+                //添加排序功能
+                query.orderBy(cb.desc(root.get("id").as(Long.class)));
+                return query.getRestriction();
+            }
+        };
+    }
+
+    /**
+     * 多表联合查询
+     */
+    private Specification<Employee> buildSpecificationWithUnion(final String employeeName, final String departmentName, final Long minId){
+        return new Specification<Employee>() {
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicate = new ArrayList<Predicate>();
+                Predicate predicate1 = cb.equal(root.join("department").get("departmentName").as(String.class),departmentName);//department为表名
+                Predicate predicate2 = cb.gt(root.get("id").as(Long.class), minId);
+                Predicate predicate3 = cb.like(root.get("name").as(String.class),employeeName);
+                predicate.add(predicate1);
+                predicate.add(predicate2);
+                predicate.add(predicate3);
+                Predicate[] predicates = new Predicate[predicate.size()];
+                return cb.and(predicate.toArray(predicates));
+            }
+        };
+    }
+
+    /**
+     * EntityManager的使用
+     */
+
 }

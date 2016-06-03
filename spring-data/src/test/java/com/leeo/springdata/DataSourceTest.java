@@ -97,7 +97,7 @@ public class DataSourceTest {
 
     @Test
     public void testSpecificationPage(){
-        Page<Employee> employees = employeeService.findEmployeeBySpecification(1,5);
+        Page<Employee> employees = employeeService.findEmployeeBySpecification(1,5,5l);
         System.out.println(employees.getContent());
     }
 }
