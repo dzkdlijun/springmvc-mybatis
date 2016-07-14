@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <title></title>
+</head>
+<body>
+
+<!-- 所有设置了.form-control的< input>、< textarea>和< select>元素都将被默认设置为width: 100%;。将label和前面提到的这些控件包裹在.form-group中可以获得最好的排列 -->
+
+<div class="container">
+    <form role="form">
+        <div class="form-group">
+            <label for="exampleInputEmail">Email address</label>
+            <input type="email" class="form-control" id="exampleInputEmail" placeholder="Enter email">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputFile">File input</label>
+            <input type="file" id="exampleInputFile">
+            <p class="help-block">Example block-level help text here</p>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox"> Check me out
+            </label>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+
+    <!-- 内联表单 -->
+    <div class="container">
+        <form class="form-inline" role="form">
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputEmail2">Email address</label>
+                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="Enter email">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="exampleInputPassword2">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox">Remember me
+                </label>
+            </div>
+            <button type="submit" class="btn btn-default">Sign in</button>
+        </form>
+    </div>
+
+    <br>
+
+    <!-- 水平表单 -->
+    <div class="container">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox">Remember me
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-default">Sign in</button>
+                </div>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="">
+                    Option one is this and that&mdash;be sure to include why it's great
+                </label>
+            </div>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                    Option one is this and that&mdash;be sure to include why it's great
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                    Option two can be something else and selecting it will deselect option one
+                </label>
+            </div>
+        </form>
+    </div>
+
+    <!-- 内联checkBoxes,col-sm-* 之类调整控件宽度，input-lg之类控制控件高度 -->
+    <br>
+    <h3>内联checkBoxes</h3>
+    <div class="container">
+        <label class="checkbox-inline col-sm-offset-1 col-sm-10 input-lg">
+            <input type="checkbox" id="inlineCheckBox1" value="option1">1
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckBox2" value="option2">2
+        </label>
+        <label class="checkbox-inline">
+            <input type="checkbox" id="inlineCheckBox3" value="option1">3
+        </label>
+    </div>
+
+    <!-- 下拉选择 -->
+    <h3>下拉选择</h3>
+    <div class="container">
+        <select class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+
+        <select multiple class="form-control">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+    </div>
+
+    <br>
+    <h3>静态控件</h3>
+    <!-- 静态控件,disabled禁用输入框 -->
+    <form class="form-horizontal" role="form">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <p class="form-control-static">email@example.com</p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label form="inputPassword" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+            </div>
+            <input type="text" class="form-control" id="focusedInput"  value="focused.." disabled>
+        </div>
+    </form>
+
+    <!-- 禁用自定义控件，IE9以下不兼容 -->
+    <form role="form">
+        <fieldset disabled>
+            <div class="form-group">
+                <label for="disabledTextInput">Disabled input</label>
+                <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+            </div>
+            <div class="form-group">
+                <label for="disabledSelect">Disabled select menu</label>
+                <select id="disabledSelect" class="form-control">
+                    <option>Disabled select</option>
+                </select>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox"> Can't check this
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </fieldset>
+    </form>
+
+    <!-- 校验状态 -->
+    <div class="form-group has-success">
+        <label class="control-label" for="inputSuccess">Input with success</label>
+        <input type="text" class="form-control" id="inputsuccess">
+    </div>
+    <div class="form-group has-warning">
+        <label class="control-label" for="inputWarning">Input with warning</label>
+        <input type="text" class="form-control" id="inputWarning">
+    </div>
+    <div class="form-group has-error">
+        <label class="control-label" for="inputError">Input with error</label>
+        <input type="text" class="form-control" id="inputError">
+    </div>
+
+    <!-- 帮助文本 -->
+    <br>
+    <h3>帮助文本</h3>
+    <span class="help-block">自己独占一行或多行的块级帮助文本。</span>
+</div>
+
+</body>
+</html>
