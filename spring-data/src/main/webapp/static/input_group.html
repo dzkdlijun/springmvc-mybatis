@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width,initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <!-- input-group-addon 在输入框之前或之后增加一些默认值，input-group-lg等给input-group中的所有输入组件增加大小 -->
+    <div class="input-group input-group-lg">
+        <span class="input-group-addon">@</span>
+        <input type="text" class="form-control" placeholder="Username">
+    </div>
+
+    <div class="input-group input-group-sm">
+        <input type="text" class="form-control">
+        <span class="input-group-addon">.00</span>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon">$</span>
+        <input type="text" class="form-control">
+        <span class="input-group-addon">.00</span>
+    </div>
+
+    <!-- 复选框，单选框 -->
+    <br>
+    <h3>复选框，单选框</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input type="checkbox">
+                </span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <input type="radio">
+                </span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+    </div>
+
+    <!-- 附加按钮 -->
+    <br>
+    <h3>附加按钮</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- 带下拉菜单的按钮 -->
+    <br>
+    <h3>带下拉菜单的按钮</h3>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="http://www.baidu.com">Action</a> </li>
+                        <li><a href="http://www.sina.com">Another action</a> </li>
+                        <li><a href="http://www.163.com">Something else here</a> </li>
+                        <li class="divider"></li>
+                        <li><a href="http://www.baidu.com">Separated link</a> </li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="input-group">
+                <input type="text" class="form-control">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action</button>
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#">Action</a> </li>
+                        <li><a href="#">Another action</a> </li>
+                        <li><a href="#">Something else here</a> </li>
+                        <li class="divider"></li>
+                        <li><a href="#"> Separated link</a> </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Action</button>
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input type="text" class="form-control">
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+    </div>
+</div>
+</body>
+</html>
