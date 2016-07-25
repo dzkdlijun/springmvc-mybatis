@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .class_1{
+            height: 100px;
+            width: 100px;
+            background: red;
+        }
+        .class_2{
+            height: 100px;
+            width: 100px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <input type="text" onblur ="onClick()" id="input1">please input!!
+</div>
+
+<div class="container class_1" id="color">
+
+</div>
+
+<button type="button" onclick="change_color()">改变颜色</button>
+
+<button type="button" onclick="add_node()">插入节点</button>
+
+<button type="button" onclick="delete_node()">删除节点</button>
+
+<script>
+    function onClick(){
+        if(document.getElementById('input1').value.trim()==''){
+            alert("Can't input empty!");
+        }
+    }
+
+    function change_color(){
+        document.getElementById("color").setAttribute("class","class_2");
+    }
+
+    function add_node(){
+        var input = document.createElement("input");
+        input.id = "input2";
+        input.name = "input2";
+        document.getElementById("color").appendChild(input);
+    }
+
+    function delete_node(){
+        var input = document.getElementById("input2")
+        input.parentNode.removeChild(input);
+    }
+</script>
+</body>
+</html>
