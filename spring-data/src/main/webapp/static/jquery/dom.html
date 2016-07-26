@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery dom</title>
+    <script type="text/javascript" src="../js/jquery-3.0.0.js"></script>
+    <style>
+        .demo {
+            border: 1px solid red;
+            height: 100px;
+        }
+        .title{
+            position: relative;
+            border: 1px solid red;
+            height: 100px;
+            width: 200px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var li_obj = $("<li>黄色</li>");
+            $(li_obj).insertAfter("ul");
+
+            $("ul li:eq(0)").remove();
+
+            $("ul li").on('click', function () {
+                $(this).clone(true).appendTo('ul');
+            });
+
+//            $("p").replaceWith("<p>SHIYANLOU</p>");
+            $("<p>SHIYANLOU</p>").replaceAll($("p"));
+
+//            $("p").wrap("<div style='border: 2px red solid;'></div>");
+
+//            var p_class = $("p").attr("class");
+//            $("div").append(p_class);
+//
+//            $("div").attr("class","demo");
+//
+//            $("div").removeAttr("class","demo");
+            $("div:eq(0)").css({"border": "1px solid red", "height": "100px"})
+            $("ul li").hover(function () {
+                $(this).css({"font-size": "24px"});
+                $(this).next().hide();
+            }, function () {
+                $(this).css({"font-size": "14px"});
+                $(this).next().show();
+            });
+
+            $(".title").animate({left:"500px"},3000);
+
+        })
+    </script>
+
+</head>
+<body>
+<!--  插入节点
+append()       向匹配的元素内部追加内容（上节示例）
+appendTo()     将匹配的元素追加到指定的元素中
+prepend()      向匹配的元素内部前置内容
+prependTo()    将匹配的元素前置到指定的元素中
+after()        在匹配的元素之后插入内容
+insertAfter()  将匹配的元素插入到指定的元素的后面
+before()       在匹配的元素之前插入内容
+insertBefore() 将匹配的元素插入到指定的元素的前面
+ -->
+<ul>
+    <li>blue</li>
+    <li>white</li>
+    <li>red</li>
+</ul>
+
+<!-- 删除节点
+remove()  从DOM中删除所匹配的元素，可传参数，后代节点也被删除
+detach()  从DOM中删除所匹配的元素，但绑定的事件、附加的数据等会保留下来
+empty()   清空节点，清空元素的所有后代元素节点
+ -->
+
+<!-- clone()复制节点，如果传递参数true,则在复制元素的同时复制其所绑定的事件 -->
+
+<!--  替换节点
+repalceWith()  将匹配的元素替换成指定的HTML或DOM元素
+replaceAll()   颠倒了replaceWith()的操作
+ -->
+<p>shiyanlou</p>
+
+<p>shiyanlou1</p>
+
+<!--  包裹节点
+wrap()      将匹配的元素用其他结构化的标记包裹起来（单独包裹）
+wrapAll()   将匹配的元素用一个结构化的标记包裹起来
+wrapInner() 将匹配的元素的子内容用其他结构化的标记包裹起来
+ -->
+
+<!--  属性操作
+ 1.用attr()方法获取和设置元素的属性
+ 2.用removeAttr()删除元素属性
+ -->
+
+<div>div</div>
+<p>SHIYANLOU</p>
+<!--  样式操作
+ 1.追加样式 addClass()
+ 2.移除样式  removeClass()
+ -->
+
+<!--
+ 1.html()获取或设置所匹配元素中的html内容，html()获取，html("some element")设置
+ 2.text()获取或设置所匹配元素中的文本内容
+ 3.val()设置或获取元素的值-->
+
+<!--  遍历节点
+ 1.children() 获取匹配元素的子元素集合
+ 2.next() 获取匹配元素后面紧邻的同辈元素
+ 3. prev() 获取匹配元素前面紧邻的同辈元素
+ 4. siblings() 获取匹配元素前后所有的同辈元素
+ 5. parent() 获取匹配元素的父级元素
+ -->
+
+<!--  css-dom操作
+ 1. css() 获取或设置元素的样式属性
+ -->
+
+<!-- animate()实现自定义动画 -->
+<div class="title">shiyanlou</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery Ajax</title>
+    <script type="text/javascript" src="../js/jquery-3.0.0.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#loadBtn").click(function () {
+                $(".loadData").load("selector.html")
+            });
+
+//            $("#jsonBtn").click(function () {
+//                $(".jsonData").getJSON()
+//            });
+
+            $("#getBtn").click(function(){
+                $.get("/test/get",{
+                 username:$('#username_get').val(),
+                    password:$('#password_get').val()
+                },function(data,textStatus){
+                    $(".getData").text(data.userName);
+                })
+            });
+
+            $("#postBtn").click(function(){
+                $.post("/test/post",{
+                    userName:$('#username_post').val(),
+                    passWord:$('#password_post').val()
+                },function(data,textStatus){
+                    $(".postData").text(data.userName);
+                })
+            });
+
+            $("#ajaxBtn").click(function(){
+                $.ajax({
+                    type:"POST",
+                    url:"/test/post",
+                    dataType:"application/json",
+                    success:function(data){
+                        $(".ajaxData").text(data.userName);
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<!--
+ 1.load() 载入远程html代码或记事本中的内容插入DOM中
+ 2.使用get方式进行异步请求
+ 3.使用post方式进行异步请求
+ 4.$.getJSON()加载JSON文件
+ 5.使用ajax()代替上述4中方法
+ -->
+<p>load加载</p>
+<input type="button" value="load获取" id="loadBtn"/>
+
+<div>The data:</div>
+<div class="loadData"></div>
+
+<p>get请求</p>
+username:<input type="text" value="" id="username_get">
+password:<input type="text" value="" id="password_get">
+<input type="button" value="get获取" id="getBtn"/>
+<div>The data:</div>
+<div class="getData"></div>
+
+<p>post请求</p>
+username:<input type="text" value="" id="username_post">
+password:<input type="password" value="" id="password_post">
+<input type="button" value="post获取" id="postBtn"/>
+<div>The data:</div>
+<div class="postData"></div>
+
+<p>getJson</p>
+<input type="button" id="jsonBtn">
+<div>The data:</div>
+<div class="jsonData"></div>
+
+<p>ajax请求</p>
+<input type="button" value="ajax获取" id="ajaxBtn"/>
+<div>The data:</div>
+<div class="ajaxData"></div>
+</body>
+</html>
