@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JQuery plugin</title>
+    <script type="text/javascript" src="../js/jquery-3.0.0.js"></script>
+    <style>
+        .one {
+            background: black;
+            height: 100px;
+            width: 200px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        //自定义插件
+        ;
+        (function ($) {
+            jQuery.fn.extend({
+                        "background": function (value) {
+                            if (value == undefined) {
+                                return this.css("background");
+                            } else {
+                                return this.css("background", value);
+                            }
+                        }
+                    }
+            );
+        })(jQuery)
+
+        //使用插件
+        $(document).ready(function () {
+            alert($('.one').background(""))
+        })
+    </script>
+</head>
+<body>
+<div class="one"></div>
+</body>
+</html>
