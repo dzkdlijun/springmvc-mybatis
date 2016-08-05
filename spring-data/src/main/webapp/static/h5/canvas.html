@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas</title>
+    <script type="text/javascript" src="../js/jquery-3.0.0.js"></script>
+</head>
+<body>
+<div class="container" style="border: 5px red;">
+    <canvas id="demoCanvas" width="500" height="500">
+        <p>
+            canvas 绘画
+        </p>
+    </canvas>
+    <script type="text/javascript">
+        //获取canvas元素
+        var canvasDom = document.getElementById("demoCanvas");
+        //获取上下文
+        var context = canvasDom.getContext("2d");
+        //指定绘制线样式、颜色
+        context.strokeStyle = "red";
+        //绘制空心矩形
+        context.strokeRect(10,10,190,100);
+        //演示填充矩形
+        context.fillStyle="blue";
+        context.fillRect(110,110,100,100);
+    </script>
+</div>
+
+<!-- 绘制线条 -->
+<script type="text/javascript">
+    var canvasDom = document.getElementById("demoCanvas");
+    var context = canvasDom.getContext("2d");
+    context.beginPath();
+    context.moveTo(20,20);
+    context.lineTo(200,200);
+    context.lineTo(400,20);
+    context.closePath();
+    context.lineWidth = 2.0;
+    context.strokeStyle = "red";
+    context.stroke();
+</script>
+
+<!-- canvas 绘制文本 fillText(String,x,y),实心字不支持断行，多行需要多次调用；strokeText(String,x,y)空心字-->
+<script type="text/javascript">
+    var canvasDom = document.getElementById("demoCanvas");
+    var context = canvasDom.getContext("2d");
+    context.moveTo(200,200);
+    context.font="Bold 50px Arial";
+    context.textAlign = "left";
+    context.fillStyle = "orange";
+    context.fillText("决定从v水电费拉拉的高考理科为健康日历",10,50);
+    context.strokeText("blog.itjeek.com",10,100);
+</script>
+
+<!--  绘制图片，drawImage(image,x,y) -->
+<script type="text/javascript">
+    var canvasDom = document.getElementById("demoCanvas");
+    var context = canvasDom.getContext("2d");
+    var image = new Image();
+    image.src = "../image/logo.ico";
+    image.onload = function () {
+        for(var i=0;i<10;i++){
+            context.drawImage(image,100+i*80,100+i*80);
+        }
+    }
+
+</script>
+</body>
+</html>
