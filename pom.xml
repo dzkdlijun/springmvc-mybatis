@@ -8,6 +8,7 @@
   <modules>
     <module>mybatis</module>
     <module>spring-data</module>
+      <module>sphinx</module>
   </modules>
   <name>framework Maven Webapp</name>
   <url>http://maven.apache.org</url>
