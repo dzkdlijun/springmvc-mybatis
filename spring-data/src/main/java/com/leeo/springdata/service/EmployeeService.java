@@ -1,5 +1,6 @@
 package com.leeo.springdata.service;
 
+import com.leeo.springdata.annotation.Intercept;
 import com.leeo.springdata.dao.EmployeeRepository;
 import com.leeo.springdata.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,7 @@ public class EmployeeService  {
         return employeeRepository.findByNameLike(name);
     }
 
+    @Intercept
     public Employee getMaxIdEmployee(){
         return employeeRepository.getMaxIdPerson();
     }
