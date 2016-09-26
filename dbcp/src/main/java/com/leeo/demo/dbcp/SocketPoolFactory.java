@@ -53,7 +53,7 @@ public class SocketPoolFactory {
         }
 
         public PooledObject wrap(Object obj) {
-            return create();
+            return null;
         }
 
         public void destroyObject(Object obj)

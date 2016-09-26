@@ -45,7 +45,7 @@ public class Test
 		int port = 9312;
 		int mode = SphinxClient.SPH_MATCH_ALL;
 //		String index = "article_delta";
-		String index = "app01";
+		String index = "resource";
 		int offset = 0;
 		int limit = 20;
 		int sortMode = SphinxClient.SPH_SORT_ATTR_ASC;
@@ -90,7 +90,7 @@ public class Test
 		if ( groupBy.length()>0 )
 			cl.SetGroupBy ( groupBy, SphinxClient.SPH_GROUPBY_ATTR, groupSort );
 
-		SphinxResult res = cl.Query(q.toString(), index);
+		SphinxResult res = cl.Query("@name \"九\"/1 @resourceType \"CATERING\"/8 ", index);
 		if ( res==null )
 		{
 			System.err.println ( "Error: " + cl.GetLastError() );

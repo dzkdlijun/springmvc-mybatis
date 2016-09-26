@@ -9,7 +9,6 @@
     <module>mybatis</module>
     <module>spring-data</module>
       <module>sphinx</module>
-    <module>quartz</module>
       <module>dbcp</module>
   </modules>
   <name>framework Maven Webapp</name>
