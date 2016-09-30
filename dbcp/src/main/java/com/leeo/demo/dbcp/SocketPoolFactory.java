@@ -2,6 +2,7 @@ package com.leeo.demo.dbcp;
 
 import org.apache.commons.pool2.BasePooledObjectFactory;
 import org.apache.commons.pool2.PooledObject;
+import org.apache.commons.pool2.impl.DefaultPooledObject;
 import org.apache.commons.pool2.impl.GenericObjectPool;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 
@@ -53,7 +54,7 @@ public class SocketPoolFactory {
         }
 
         public PooledObject wrap(Object obj) {
-            return null;
+            return new DefaultPooledObject(obj);
         }
 
         public void destroyObject(Object obj)
