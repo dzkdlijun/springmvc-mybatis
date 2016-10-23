@@ -10,6 +10,8 @@
     <module>spring-data</module>
       <module>sphinx</module>
       <module>dbcp</module>
+    <module>echarts</module>
+    <module>echarts</module>
   </modules>
   <name>framework Maven Webapp</name>
   <url>http://maven.apache.org</url>

@@ -37,7 +37,7 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<prop key="hibernate.hbm2ddl.auto">update</prop>-->
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
@@ -66,65 +66,65 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
 
     <!-- start of 继承定时任务 -->
     <!-- 配置作业类 -->
-    <bean name="task1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
-        <property name="jobClass" value="com.leeo.springdata.quartz.QuartzJob1"/>
-        <property name="jobDataAsMap">
-            <map>
-                <entry key="timeout" value="0"/>
-            </map>
-        </property>
-    </bean>
+    <!--<bean name="task1" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">-->
+        <!--<property name="jobClass" value="com.leeo.springdata.quartz.QuartzJob1"/>-->
+        <!--<property name="jobDataAsMap">-->
+            <!--<map>-->
+                <!--<entry key="timeout" value="0"/>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- 配置触发方式一：每隔一定时间执行一次 -->
-    <bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-        <property name="jobDetail" ref="task1"/>
-        <property name="startDelay" value="0"/> <!-- 首次执行延迟时间-->
-        <property name="repeatInterval" value="2000"/> <!-- 每2秒执行一次-->
-    </bean>
+    <!--<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="task1"/>-->
+        <!--<property name="startDelay" value="0"/> &lt;!&ndash; 首次执行延迟时间&ndash;&gt;-->
+        <!--<property name="repeatInterval" value="2000"/> &lt;!&ndash; 每2秒执行一次&ndash;&gt;-->
+    <!--</bean>-->
 
     <!-- 触发方式二：指定时间运行 -->
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="task1"/>
-        <property name="cronExpression" value="0 09 18 * * ?"/>  <!-- 每天12：00运行 -->
-    </bean>
-    <!-- end of 继承定时任务 -->
+    <!--<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="task1"/>-->
+        <!--<property name="cronExpression" value="0 09 18 * * ?"/>  &lt;!&ndash; 每天12：00运行 &ndash;&gt;-->
+    <!--</bean>-->
+    <!--&lt;!&ndash; end of 继承定时任务 &ndash;&gt;-->
 
     <!-- start of 不继承定时任务 -->
-    <bean id="task2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
-        <property name="targetObject"><bean class="com.leeo.springdata.quartz.QuartzJob2"/> </property>
-        <property name="targetMethod" value="doJob"/>
-        <property name="concurrent" value="false"/>
-    </bean>
+    <!--<bean id="task2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">-->
+        <!--<property name="targetObject"><bean class="com.leeo.springdata.quartz.QuartzJob2"/> </property>-->
+        <!--<property name="targetMethod" value="doJob"/>-->
+        <!--<property name="concurrent" value="false"/>-->
+    <!--</bean>-->
 
-    <bean id="simpleTrigger2" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">
-        <property name="jobDetail" ref="task2"/>
-        <property name="startDelay" value="0"/>
-        <property name="repeatInterval" value="3000"/>
-    </bean>
+    <!--<bean id="simpleTrigger2" class="org.springframework.scheduling.quartz.SimpleTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="task2"/>-->
+        <!--<property name="startDelay" value="0"/>-->
+        <!--<property name="repeatInterval" value="3000"/>-->
+    <!--</bean>-->
 
-    <bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
-        <property name="jobDetail" ref="task2"/>
-        <property name="cronExpression" value="0 26 10 * * ?"/>
-    </bean>
+    <!--<bean id="cronTrigger2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">-->
+        <!--<property name="jobDetail" ref="task2"/>-->
+        <!--<property name="cronExpression" value="0 26 10 * * ?"/>-->
+    <!--</bean>-->
     <!-- end of 不继承定时任务 -->
 
     <!-- 配置工厂调度 -->
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="triggers">
-            <list>
-                <ref bean="simpleTrigger2"></ref>
-                <ref bean="simpleTrigger"/>
-            </list>
-        </property>
-    </bean>
+    <!--<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">-->
+        <!--<property name="triggers">-->
+            <!--<list>-->
+                <!--<ref bean="simpleTrigger2"></ref>-->
+                <!--<ref bean="simpleTrigger"/>-->
+            <!--</list>-->
+        <!--</property>-->
+    <!--</bean>-->
 
     <!-- 配置文件实现spring-task定时任务 -->
-    <task:scheduled-tasks>
-        <task:scheduled ref="quartzJob3" method="doJob" fixed-rate="2000"/>
-    </task:scheduled-tasks>
+    <!--<task:scheduled-tasks>-->
+        <!--<task:scheduled ref="quartzJob3" method="doJob" fixed-rate="2000"/>-->
+    <!--</task:scheduled-tasks>-->
     <!-- end of 配置文件实现spring-task定时任务-->
 
     <!-- 开启注解定时任务配置 -->
-    <task:annotation-driven scheduler="qbScheduler" mode="proxy"/>
-    <task:scheduler id="qbScheduler" pool-size="10"/>
+    <!--<task:annotation-driven scheduler="qbScheduler" mode="proxy"/>-->
+    <!--<task:scheduler id="qbScheduler" pool-size="10"/>-->
 </beans>
