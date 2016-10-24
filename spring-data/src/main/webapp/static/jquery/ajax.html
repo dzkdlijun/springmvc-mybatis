@@ -24,42 +24,45 @@
             });
 
             $("#postBtn").click(function(){
-                $.post("/test/post",{
+                $.post("/test/post",JSON.stringify({
                     userName:$('#username_post').val(),
                     passWord:$('#password_post').val()
-                },function(data,textStatus){
+                }),function(data,textStatus){
                     $(".postData").text(data.userName);
                 })
             });
 
             var postData = {
-                username:$('#username_post').val(),
-                password:$('#password_post').val()
-            }
+                userName:$('#username_post').val(),
+                passWord:$('#password_post').val()
+            };
 
-//            $("#ajaxBtn").click(function(){
-//                $.ajax({
-//                    type:"POST",
-//                    url:"/test/post",
-//                    contentType:"application/json",
-//                    data:postData,
-//                    dataType:"json",
-//                    success:function(data){
-//                        $(".ajaxData").text(data.userName);
-//                    }
-//                });
-//            });
             $("#ajaxBtn").click(function(){
                 $.ajax({
                     type:"POST",
                     url:"/test/post",
+                    contentType:"application/json",
+                    data:JSON.stringify({
+                        userName:$('#username_post').val(),
+                        passWord:$('#password_post').val()
+                    }),
                     dataType:"json",
                     success:function(data){
-                        //返回的数据
-                        document.write("data");
+                        $(".ajaxData").text(data.userName);
                     }
                 });
             });
+//            $("#ajaxBtn").click(function(){
+//                $.ajax({
+//                    type:"POST",
+//                    url:"/test/post",
+//                    dataType:"json",
+//                    success:function(data){
+//                        //返回的数据
+//                        document.write("data");
+//                    }
+//                });
+//            });
         })
     </script>
 </head>
