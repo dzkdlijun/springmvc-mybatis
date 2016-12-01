@@ -2,9 +2,7 @@ package com.leeo.demo.poi;
 
 import org.apache.poi.xwpf.usermodel.*;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -14,12 +12,15 @@ public class XWPFDocumentTest {
 
     public static void main(String[] args) throws Exception {
         XWPFDocumentTest test = new XWPFDocumentTest();
-        test.testReadByDoc("C:/Users/DELL/Desktop/项目/检测报告/环化/保变天威.docx");
+        test.testReadByDocx("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
     }
     
-    public void testReadByDoc(String filePath) throws Exception {
+    public void testReadByDocx(String filePath) throws Exception {
         InputStream is = new FileInputStream(filePath);
         XWPFDocument doc = new XWPFDocument(is);
+//        FileOutputStream os = new FileOutputStream(new File("E:/powergrid/检测报告/环化/test.docx"));
+//        doc.write(os);
+//        os.close();
         List<XWPFParagraph> paras = doc.getParagraphs();
         for (XWPFParagraph para : paras) {
             //当前段落的属性
@@ -43,6 +44,9 @@ public class XWPFDocumentTest {
                 }
             }
         }
+//        FileOutputStream os = new FileOutputStream(new File("E:/powergrid/检测报告/物资/test.docx"));
+//        doc.write(os);
+//        os.close();
         this.close(is);
     }
 
