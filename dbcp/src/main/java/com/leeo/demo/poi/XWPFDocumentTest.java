@@ -13,6 +13,7 @@ public class XWPFDocumentTest {
     public static void main(String[] args) throws Exception {
         XWPFDocumentTest test = new XWPFDocumentTest();
         test.testReadByDocx("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
+//        test.testReadByDocx("D:"+File.separator+"poi.docx");
     }
     
     public void testReadByDocx(String filePath) throws Exception {
