@@ -1,19 +1,34 @@
 package com.leeo.demo.poi;
 
+import com.leeo.demo.poi.domain.BaseDomain;
+import org.apache.poi.POIXMLDocument;
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.usermodel.Range;
+import org.apache.poi.openxml4j.opc.OPCPackage;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.xwpf.usermodel.*;
 
 import java.io.*;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by DELL on 2016/9/26.
  */
 public class XWPFDocumentTest {
 
+    private static final String DOCX_TEMPLATE_PATH = "D:"+File.separator+"template.docx";
+    private static final String DOC_TEMPLATE_PATH = "D:"+File.separator+"template.doc";
+
     public static void main(String[] args) throws Exception {
         XWPFDocumentTest test = new XWPFDocumentTest();
-        test.testReadByDocx("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
+//        test.testReadByDocx("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
 //        test.testReadByDocx("D:"+File.separator+"poi.docx");
+        test.update("D:"+File.separator+"update.docx",new BaseDomain(0l,"（新都500千繁220千伏间隔扩建工程（删除））"));
     }
     
     public void testReadByDocx(String filePath) throws Exception {
@@ -50,6 +65,82 @@ public class XWPFDocumentTest {
 //        os.close();
         this.close(is);
     }
+
+    public void update(String filePath,BaseDomain domain) throws IOException, IllegalAccessException {
+        if(filePath.endsWith("docx")){
+            updateDocx(filePath,domain);
+        }else {
+            updateDoc(filePath,domain);
+        }
+
+    }
+
+    public void updateDocx(String filePath,BaseDomain domain) throws IOException, IllegalAccessException {
+        OPCPackage pack = POIXMLDocument.openPackage(DOCX_TEMPLATE_PATH);
+//        FileInputStream inputStream = new FileInputStream(DOCX_TEMPLATE_PATH);
+        XWPFDocument document = new XWPFDocument(pack);
+//        inputStream.close();
+
+        List<XWPFParagraph> paragraphs =document.getParagraphs();
+        processParagraphs(paragraphs,BaseDomain.getPropertyMap(domain));
+        Iterator<XWPFTable> it = document.getTablesIterator();
+        while (it.hasNext()){
+            XWPFTable table = it.next();
+            List<XWPFTableRow> rows = table.getRows();
+            for(XWPFTableRow row:rows){
+                List<XWPFTableCell> cells = row.getTableCells();
+                for(XWPFTableCell cell:cells){
+                    List<XWPFParagraph> tableParagraphs = cell.getParagraphs();
+                    processParagraphs(tableParagraphs,BaseDomain.getPropertyMap(domain));
+                }
+            }
+        }
+
+        FileOutputStream fos = new FileOutputStream(filePath);
+        document.write(fos);
+        fos.flush();
+        fos.close();
+    }
+
+    public void updateDoc(String filePath,BaseDomain domain) throws IOException, IllegalAccessException {
+        FileInputStream ins = new FileInputStream(DOC_TEMPLATE_PATH);
+        HWPFDocument document = new HWPFDocument(ins);
+        Range bodyRange = document.getRange();
+        Map<String,String> map = BaseDomain.getPropertyMap(domain);
+        for(Map.Entry<String,String> entry:map.entrySet()){
+            bodyRange.replaceText("{%"+entry.getKey()+"%}",entry.getValue());
+        }
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        document.write(outputStream);
+        OutputStream outputStream1 = new FileOutputStream(filePath);
+        outputStream1.write(outputStream.toByteArray());
+        outputStream1.close();
+        outputStream.close();
+    }
+
+    private void processParagraphs(List<XWPFParagraph> paragraphs,Map<String,String> map){
+        for(XWPFParagraph paragraph:paragraphs){
+            List<XWPFRun> runs = paragraph.getRuns();
+            for(XWPFRun run:runs){
+                String text = run.getText(0);
+                boolean isSetText = false;
+                if(text!=null&&!text.trim().equals("")){
+                    for(Map.Entry<String,String> entry:map.entrySet()){
+                        String key = "{%"+entry.getKey()+"%}";
+                        if(text.indexOf(key)!=-1){
+                            isSetText = true;
+                            text = text.replace(key,entry.getValue());
+                        }
+                    }
+                    if(isSetText){
+                        run.setText(text,0);
+                    }
+                }
+            }
+        }
+    }
+
 
     /**
      * 关闭输入流
