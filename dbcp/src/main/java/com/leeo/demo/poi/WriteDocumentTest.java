@@ -16,15 +16,10 @@ public class WriteDocumentTest {
     public static void main(String[] args) throws IOException, XmlException {
 //        InputStream is = new FileInputStream("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
 //        XWPFDocument doc = new XWPFDocument(is);
-        XWPFDocument document = new XWPFDocument();
+        XWPFDocument document = new XWPFDocument(new FileInputStream("D:"+File.separator+"merge.docx"));
         FileOutputStream out = new FileOutputStream(new File("D:"+File.separator+"poi.docx"));
-        XWPFParagraph paragraph = document.createParagraph();
-        XWPFRun run = paragraph.createRun();
-        run.setText("At w3ii.com, we strive hard to \" +\n" +
-                "   \"provide quality tutorials for self-learning \" +\n" +
-                "   \"purpose in the domains of Academics, Information \" +\n" +
-                "   \"Technology, Management and Computer Programming\n" +
-                "   Languages.");
+//        XWPFParagraph paragraph = document.createParagraph();
+
         CTP ctp = CTP.Factory.newInstance();
         XWPFParagraph codePara = new XWPFParagraph(ctp, document);
         XWPFRun r1 = codePara.createRun();
