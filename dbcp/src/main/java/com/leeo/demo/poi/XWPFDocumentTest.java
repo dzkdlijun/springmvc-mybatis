@@ -7,6 +7,7 @@ import org.apache.poi.hwpf.usermodel.Range;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.ss.formula.functions.T;
 import org.apache.poi.xwpf.usermodel.*;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.STPageOrientation;
 
 import java.io.*;
 import java.util.HashMap;
@@ -27,7 +28,7 @@ public class XWPFDocumentTest {
     public static void main(String[] args) throws Exception {
         XWPFDocumentTest test = new XWPFDocumentTest();
 //        test.testReadByDocx("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
-//        test.testReadByDocx("D:"+File.separator+"poi.docx");
+//        test.testReadByDocx("D:"+File.separator+"template.docx");
         test.update("D:"+File.separator+"update.docx",new BaseDomain(0l,"（新都500千繁220千伏间隔扩建工程（删除））"));
     }
     
@@ -96,6 +97,7 @@ public class XWPFDocumentTest {
             }
         }
 
+        WriteDocumentTest.setDocumentSizeAndDirection(document,null,null, STPageOrientation.Enum.forInt(STPageOrientation.INT_PORTRAIT));
         FileOutputStream fos = new FileOutputStream(filePath);
         document.write(fos);
         fos.flush();

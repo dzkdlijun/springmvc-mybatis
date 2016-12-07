@@ -14,12 +14,18 @@ import java.math.BigInteger;
  */
 public class WriteDocumentTest {
     public static void main(String[] args) throws IOException, XmlException {
-//        InputStream is = new FileInputStream("E:/powergrid/检测报告/物资/PW037眉山西电蜀能.docx");
+//        InputStream is = new FileInputStream(new File("D:"+File.separator+"poi.docx"));
+//        is.close();
 //        XWPFDocument doc = new XWPFDocument(is);
-        XWPFDocument document = new XWPFDocument(new FileInputStream("D:"+File.separator+"merge.docx"));
+        XWPFDocument document = new XWPFDocument();
         FileOutputStream out = new FileOutputStream(new File("D:"+File.separator+"poi.docx"));
-//        XWPFParagraph paragraph = document.createParagraph();
-
+        XWPFParagraph paragraph = document.createParagraph();
+        XWPFRun run = paragraph.createRun();
+        run.setText("At w3ii.com, we strive hard to \" +\n" +
+                "   \"provide quality tutorials for self-learning \" +\n" +
+                "   \"purpose in the domains of Academics, Information \" +\n" +
+                "   \"Technology, Management and Computer Programming\n" +
+                "   Languages.");
         CTP ctp = CTP.Factory.newInstance();
         XWPFParagraph codePara = new XWPFParagraph(ctp, document);
         XWPFRun r1 = codePara.createRun();
@@ -66,10 +72,28 @@ public class WriteDocumentTest {
         XWPFParagraph[] newparagraphs = new XWPFParagraph[1];
         newparagraphs[0] = codePara;
         CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
+
         XWPFHeaderFooterPolicy headerFooterPolicy = new XWPFHeaderFooterPolicy(
                 document, sectPr);
         headerFooterPolicy.createFooter(STHdrFtr.DEFAULT, newparagraphs);
 
+
+        XWPFParagraph paragraphPage2 = document.createParagraph();
+        paragraphPage2.setPageBreak(true);
+        CTSectPr sectPr1 = document.getDocument().getBody().addNewSectPr();
+        if(!sectPr1.isSetPgSz()){
+            sectPr1.addNewPgSz();
+        }
+        CTPageSz pageSz = sectPr1.getPgSz();
+        pageSz.setH(new BigInteger("5950"));
+        pageSz.setW(new BigInteger("8450"));
+        pageSz.setOrient(STPageOrientation.Enum.forInt(STPageOrientation.INT_LANDSCAPE));
+        XWPFRun runPage2 = paragraphPage2.createRun();
+        runPage2.setText("At w3ii.com, we strive hard to \" +\n" +
+                "   \"provide quality tutorials for self-learning \" +\n" +
+                "   \"purpose in the domains of Academics, Information \" +\n" +
+                "   \"Technology, Management and Computer Programming\n" +
+                "   Languages.");
         document.write(out);
         out.close();
     }
@@ -78,9 +102,9 @@ public class WriteDocumentTest {
      * @Description 设置字体信息
      */
     public static void setParagraphRunFontInfo(XWPFParagraph p, XWPFRun pRun,
-                                        String content, String fontFamily, String fontSize) {
+                                               String content, String fontFamily, String fontSize) {
         CTRPr pRpr = getRunCTRPr(p, pRun);
-        if (content!=null&&!content.equals("")) {
+        if (content != null && !content.equals("")) {
             pRun.setText(content);
         }
         // 设置字体
@@ -119,12 +143,40 @@ public class WriteDocumentTest {
      * @Description: 设置段落对齐
      */
     public static void setParagraphAlignInfo(XWPFParagraph p,
-                                      ParagraphAlignment pAlign, TextAlignment valign) {
+                                             ParagraphAlignment pAlign, TextAlignment valign) {
         if (pAlign != null) {
             p.setAlignment(pAlign);
         }
         if (valign != null) {
             p.setVerticalAlignment(valign);
         }
+    }
+
+
+    public static void setDocumentSizeAndDirection(XWPFDocument document, String width, String height, STPageOrientation.Enum orientation){
+        CTSectPr sectPr = getDocumentCTSectPr(document);
+        CTPageSz pageSz = sectPr.getPgSz();
+        if(width!=null&&!width.equals("")){
+            pageSz.setW(new BigInteger(width));
+        }else {
+            pageSz.setW(new BigInteger("21"));
+        }
+        if(height!=null&&!height.equals("")){
+            pageSz.setH(new BigInteger(height));
+        }else {
+            pageSz.setH(new BigInteger("29.7"));
+        }
+        pageSz.setOrient(orientation);
+    }
+
+    public static CTSectPr getDocumentCTSectPr(XWPFDocument document){
+        //start of 分页
+//        XWPFParagraph p = document.createParagraph();
+//        //给这个段落添加一个分隔符即可。
+//        p.setPageBreak(true);
+        //end of 分页
+        CTSectPr sectPr =document.getDocument().getBody().isSetSectPr()?document.getDocument().getBody().getSectPr():
+                document.getDocument().getBody().addNewSectPr();
+        return sectPr;
     }
 }
