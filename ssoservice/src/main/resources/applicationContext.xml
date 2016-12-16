@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- 配置自动扫描的包 -->
+    <context:component-scan base-package="com.leeo.sso">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <!-- 配置数据源 -->
+    <context:property-placeholder location="classpath:db.properties"/>
+
+    <!--<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close" scope="singleton">-->
+        <!--<property name="username" value="${db.username}"/>-->
+        <!--<property name="password" value="${db.password}"/>-->
+        <!--<property name="driverClassName" value="${db.driver}"/>-->
+        <!--<property name="url" value="${db.url}"/>-->
+        <!--&lt;!&ndash;<property name="validationQuery" value="select 1"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!-- 配置IPA的entityManagerFactory -->
+    <!--<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jpaVendorAdapter">-->
+            <!--<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"/>-->
+        <!--</property>-->
+        <!--<property name="packagesToScan" value="com.leeo.springdata"/>-->
+        <!--<property name="jpaProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>-->
+                <!--&lt;!&ndash;<prop key="hibernate.hbm2ddl.auto">update</prop>&ndash;&gt;-->
+                <!--<prop key="hibernate.show_sql">true</prop>-->
+                <!--<prop key="hibernate.format_sql">true</prop>-->
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>-->
+                <!--&lt;!&ndash;<prop key="hibernate.cache.use_second_level_cache">true</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>&ndash;&gt;-->
+                <!--&lt;!&ndash;<prop key="hibernate.cache.use_query_cache">true</prop>&ndash;&gt;-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--<property name="sharedCacheMode" value="ENABLE_SELECTIVE"/>-->
+    <!--</bean>-->
+
+    <!-- 配置事物 -->
+    <!--<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">-->
+        <!--<property name="entityManagerFactory" ref="entityManagerFactory"/>-->
+    <!--</bean>-->
+
+    <!-- 配置基于注解的事物 -->
+    <!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+
+    <!-- 配置基于接口的事物 -->
+    <!--<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>-->
+
+    <!-- 配置spring data -->
+    <!--<jpa:repositories base-package="com.leeo.sso" entity-manager-factory-ref="entityManagerFactory">-->
+    <!--</jpa:repositories>-->
+
+</beans>
