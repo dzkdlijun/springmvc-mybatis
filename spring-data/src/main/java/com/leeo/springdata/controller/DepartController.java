@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by lijun on 2016/5/30.
  */
@@ -20,8 +22,11 @@ public class DepartController {
 
     @RequestMapping(value = "list",method = RequestMethod.GET)
     @ResponseBody
-    public PageDomain<Department> list(@RequestParam(value = "pageNo",required = false,defaultValue = "1")int pageNo,@RequestParam(value = "pageSize",required = false,defaultValue = "1")int pageSize){
-        return new PageDomain<Department>(departmentService.getPage(pageNo,pageSize));
+    public PageDomain<Department> list(HttpServletRequest request,@RequestParam(value = "pageNo",required = false,defaultValue = "1")int pageNo, @RequestParam(value = "pageSize",required = false,defaultValue = "1")int pageSize){
+        PageDomain<Department> result =  new PageDomain<Department>(departmentService.getPage(pageNo,pageSize));
+        System.out.println(request.getUserPrincipal());
+//        result.getResult().add(new Department(request.getUserPrincipal().getName(),1));
+        return result;
     }
 
     @RequestMapping(value = "add",method = RequestMethod.POST)
