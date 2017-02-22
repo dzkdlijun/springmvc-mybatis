@@ -14,7 +14,7 @@ import java.util.concurrent.CountDownLatch;
  * @author lijun
  * @since 2017/2/21
  */
-public class AsyncTimeClientHandler implements CompletionHandler<Void, AsyncTimeServerHandler>, Runnable {
+public class AsyncTimeClientHandler implements CompletionHandler<Void, AsyncTimeClientHandler>, Runnable {
 
     private AsynchronousSocketChannel client;
     private String host;
@@ -32,8 +32,13 @@ public class AsyncTimeClientHandler implements CompletionHandler<Void, AsyncTime
     }
 
     @Override
-    public void completed(Void result, AsyncTimeServerHandler attachment) {
-        byte[] req = "QUERY TIME ORDER".getBytes();
+    public void completed(Void result, AsyncTimeClientHandler attachment) {
+        byte[] req = new byte[0];
+        try {
+            req = "QUERY TIME ORDER".getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);
         writeBuffer.put(req);
         writeBuffer.flip();
@@ -86,7 +91,7 @@ public class AsyncTimeClientHandler implements CompletionHandler<Void, AsyncTime
     }
 
     @Override
-    public void failed(Throwable exc, AsyncTimeServerHandler attachment) {
+    public void failed(Throwable exc, AsyncTimeClientHandler attachment) {
         try {
             client.close();
             latch.countDown();
@@ -98,7 +103,7 @@ public class AsyncTimeClientHandler implements CompletionHandler<Void, AsyncTime
     @Override
     public void run() {
         latch = new CountDownLatch(1);
-        client.connect(new InetSocketAddress(host, port), null, this);
+        client.connect(new InetSocketAddress(host, port), this, this);
         try {
             latch.await();
 
