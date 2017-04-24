@@ -18,7 +18,7 @@ public class WriteDocumentTest {
 //        is.close();
 //        XWPFDocument doc = new XWPFDocument(is);
         XWPFDocument document = new XWPFDocument();
-        FileOutputStream out = new FileOutputStream(new File("D:"+File.separator+"poi.docx"));
+        FileOutputStream out = new FileOutputStream(new File("D:"+File.separator+"poi.doc"));
         XWPFParagraph paragraph = document.createParagraph();
         XWPFRun run = paragraph.createRun();
         run.setText("At w3ii.com, we strive hard to \" +\n" +

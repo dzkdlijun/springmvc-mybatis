@@ -11,15 +11,13 @@ import java.io.*;
 public class HWPFDocumentTest {
     public static void main(String[] args) throws Exception {
         HWPFDocumentTest test = new HWPFDocumentTest();
-        test.testReadByDoc("E:/powergrid/检测报告/环化/环保天威03.doc");
+        test.testReadByDoc("E:/powergrid/检测报告/环化/巴中供电公司0282.doc");
     }
     public void testReadByDoc(String filePath) throws Exception {
         InputStream is = new FileInputStream(filePath);
         HWPFDocument doc = new HWPFDocument(is);
         FileOutputStream os = new FileOutputStream("E:/test.doc");
-        doc.write(os);
         closeInStream(is);
-        closeOutStream(os);
         //输出书签信息
         printInfo(doc.getBookmarks());
         //输出文本
@@ -32,9 +30,13 @@ public class HWPFDocumentTest {
         //读列表
         readList(range);
         //删除range
-        Range r = new Range(2, 5, doc);
-        r.delete();//在内存中进行删除，如果需要保存到文件中需要再把它写回文件
-
+//        Range r = new Range(2, 5, doc);
+//        r.delete();//在内存中进行删除，如果需要保存到文件中需要再把它写回文件
+        ByteArrayOutputStream ostream = new ByteArrayOutputStream();
+        doc.write(ostream);
+        os.write(ostream.toByteArray());
+        closeOutStream(os);
+        ostream.close();
     }
 
     /**
@@ -129,8 +131,12 @@ public class HWPFDocumentTest {
         for (int i=0; i<paraNum; i++) {
 //       this.insertInfo(range.getParagraph(i));
             System.out.println("段落" + (i+1) + "：" + range.getParagraph(i).text());
-            if (i == (paraNum-1)) {
-                this.insertInfo(range.getParagraph(i));
+//            if (i == (paraNum-1)) {
+//                this.insertInfo(range.getParagraph(i));
+//            }
+            if(range.getParagraph(i).text().replaceAll(" ","").contains("委托单位:")){
+                System.out.println("****检查到委托单位*****：");
+                range.getParagraph(i).insertAfter("这是委托单位");
             }
         }
         int secNum = range.numSections();
