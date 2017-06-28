@@ -20,6 +20,13 @@ public class FileChannelDemo {
         RandomAccessFile accessFile = new RandomAccessFile(filePath,"rw");
         FileChannel inChannel = accessFile.getChannel();
 
+        /**
+         * capacity buffer的容量,值固定
+         * position 写模式下，表示当前的位置，起始为0，最大为capacity-1，读模式下
+         *          也是从某个特定位置读，切换到写模式时，会被重置为0
+         * limit   写模式下，limit表示最多能往buffer里写多少数据，等于capacity
+         *         读模式下，limit表示最多能读到多少数据，从写切换到读时，会设置为position的值
+         */
         ByteBuffer buffer = ByteBuffer.allocate(24);
 
         int bytesRead = inChannel.read(buffer);
