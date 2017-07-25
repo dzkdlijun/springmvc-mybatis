@@ -1,9 +1,11 @@
 package com.leeo.mq;
 
+import com.alibaba.fastjson.JSON;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,8 +21,9 @@ public class Consumer implements InitializingBean {
     String password;
 
 
-    public void handle(String msg){
-        System.out.println("pring mqMessage :"+msg);
+    public void handle(@Payload MqMessage msg){
+        UserMessage userMessage = JSON.parseObject(msg.getData().toString(),UserMessage.class);
+        System.out.println("pring mqMessage :"+userMessage.getName()+userMessage.getAge());
     }
 
     public void afterPropertiesSet() throws Exception {
