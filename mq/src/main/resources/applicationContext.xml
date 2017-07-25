@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/p"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.5.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.leeo.mq">
+    </context:component-scan>
 
     <!--加载 配置文件-->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -13,10 +22,9 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-    <rabbit:connection-factory id="connectionFactory" />
+    <rabbit:connection-factory id="connectionFactory" host="${amqp.host}" username="${amqp.username}" password="${amqp.password}" port="${amqp.port}"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
-                     exchange="myExchange" routing-key="foo.bar"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="myExchange" routing-key="foo.bar"/>
 
     <rabbit:admin connection-factory="connectionFactory" />
 
@@ -30,6 +38,6 @@
 
 
     <rabbit:listener-container connection-factory="connectionFactory">
-        <rabbit:listener ref="foo" method="listen" queue-names="myQueue" />
+        <rabbit:listener ref="consumer" method="handle" queue-names="myQueue" />
     </rabbit:listener-container>
 </beans>
