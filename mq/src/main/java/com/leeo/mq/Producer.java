@@ -43,7 +43,8 @@ public class Producer {
         AbstractApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         RabbitTemplate template = ctx.getBean(RabbitTemplate.class);
         for(int i=0;i<10;i++){
-            template.convertAndSend(String.format("第%s条消息！！",i));
+            UserMessage message = new UserMessage("lijun",20+i);
+            template.convertAndSend(new MqMessage("test",message));
         }
     }
 }

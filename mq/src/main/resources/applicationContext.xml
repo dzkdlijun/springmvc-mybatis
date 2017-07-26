@@ -24,7 +24,7 @@
 
     <rabbit:connection-factory id="connectionFactory" host="${amqp.host}" username="${amqp.username}" password="${amqp.password}" port="${amqp.port}"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="myExchange" routing-key="foo.bar"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="myExchange" routing-key="foo.bar" message-converter="fastJsonMessageConverter"/>
 
     <rabbit:admin connection-factory="connectionFactory" />
 
@@ -37,7 +37,7 @@
     </rabbit:topic-exchange>
 
 
-    <rabbit:listener-container connection-factory="connectionFactory">
+    <rabbit:listener-container connection-factory="connectionFactory" message-converter="fastJsonMessageConverter">
         <rabbit:listener ref="consumer" method="handle" queue-names="myQueue" />
     </rabbit:listener-container>
 </beans>
